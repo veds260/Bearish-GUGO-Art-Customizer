@@ -323,9 +323,12 @@ export default function BeautifulCustomizer() {
 
     const getMousePos = (e) => {
       const rect = canvas.getBoundingClientRect();
+      const scaleX = CANVAS_WIDTH / rect.width;
+      const scaleY = CANVAS_HEIGHT / rect.height;
+      
       return {
-        x: (e.clientX - rect.left) * (CANVAS_WIDTH / rect.width),
-        y: (e.clientY - rect.top) * (CANVAS_HEIGHT / rect.height)
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
       };
     };
 
@@ -342,12 +345,19 @@ export default function BeautifulCustomizer() {
     };
 
     const handleMouseDown = (e) => {
-      if (!canAccessApp) return;
+      if (!canAccessApp) {
+        console.log('Access denied in mousedown');
+        return;
+      }
       
       const canvasData = canvasRef.current;
-      if (!canvasData) return;
-
+      if (!canvasData) {
+        console.log('No canvas data in mousedown');
+        return;
+      }
+    
       const pos = getMousePos(e);
+      console.log('Mouse down at:', pos, 'Objects:', canvasData.objects.length);
       
       // Check for resize handle first
       if (canvasData.selectedObject) {
