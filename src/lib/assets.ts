@@ -1,0 +1,58 @@
+export const gugoAssets = [
+  {
+    id: "gugo-cap",
+    name: "$GUGO Cap",
+    image: "/assets/gugo-cap.png",
+    thumbnail: "/assets/gugo-cap.png",
+    default: { x: 200, y: 50, scale: 0.4 },
+  },
+  {
+    id: "gugo-helmet",
+    name: "GUGO Helmet",
+    image: "/assets/gugo-helmet.png",
+    thumbnail: "/assets/gugo-helmet.png",
+    default: { x: 180, y: 40, scale: 0.45 },
+  },
+  {
+    id: "gugo-shades",
+    name: "Deal With It Shades",
+    image: "/assets/gugo-shades.png",
+    thumbnail: "/assets/gugo-shades.png",
+    default: { x: 220, y: 180, scale: 0.3 },
+  },
+  {
+    id: "gugo-chain",
+    name: "$GUGO Gold Chain",
+    image: "/assets/gugo-chain.png",
+    thumbnail: "/assets/gugo-chain.png",
+    default: { x: 200, y: 350, scale: 0.4 },
+  },
+  {
+    id: "gugo-hoodie",
+    name: `"GUGO enjoyer" Hoodie Collar`,
+    image: "/assets/gugo-hoodie.png",
+    thumbnail: "/assets/gugo-hoodie.png",
+    default: { x: 150, y: 400, scale: 0.5 },
+  },
+  {
+    id: "gugo-sign",
+    name: "Buy $GUGO Signboard",
+    image: "/assets/gugo-sign.png",
+    thumbnail: "/assets/gugo-sign.png",
+    default: { x: 400, y: 320, scale: 0.35 },
+  },
+  {
+    id: "gugo-plush",
+    name: "Mini GUGO Plush",
+    image: "/assets/gugo-plush.png",
+    thumbnail: "/assets/gugo-plush.png",
+    default: { x: 100, y: 450, scale: 0.3 },
+  },
+  {
+    id: "gugo-speech",
+    name: `"I only buy $GUGO dips" Bubble`,
+    image: "/assets/gugo-speech.png",
+    thumbnail: "/assets/gugo-speech.png",
+    default: { x: 80, y: 80, scale: 0.4 },
+  },
+];
