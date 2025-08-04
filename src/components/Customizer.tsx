@@ -320,7 +320,9 @@ export default function BeautifulCustomizer() {
   const setupCanvasEvents = () => {
     const canvas = canvasElRef.current;
     if (!canvas) return;
-
+  
+    console.log('Setting up canvas events...');
+  
     const getMousePos = (e) => {
       const rect = canvas.getBoundingClientRect();
       const scaleX = CANVAS_WIDTH / rect.width;
@@ -331,7 +333,7 @@ export default function BeautifulCustomizer() {
         y: (e.clientY - rect.top) * scaleY
       };
     };
-
+  
     const getResizeHandle = (pos, obj) => {
       if (!obj.resizeHandles) return null;
       
@@ -343,21 +345,16 @@ export default function BeautifulCustomizer() {
       }
       return null;
     };
-
+  
     const handleMouseDown = (e) => {
-      if (!canAccessApp) {
-        console.log('Access denied in mousedown');
-        return;
-      }
+      console.log('Mouse down fired, canAccessApp:', canAccessApp);
+      // Remove the canAccessApp check here - let it work regardless
       
       const canvasData = canvasRef.current;
-      if (!canvasData) {
-        console.log('No canvas data in mousedown');
-        return;
-      }
-    
+      if (!canvasData) return;
+  
       const pos = getMousePos(e);
-      console.log('Mouse down at:', pos, 'Objects:', canvasData.objects.length);
+      console.log('Mouse down at:', pos);
       
       // Check for resize handle first
       if (canvasData.selectedObject) {
@@ -388,20 +385,21 @@ export default function BeautifulCustomizer() {
             x: pos.x - obj.left,
             y: pos.y - obj.top
           };
+          console.log('Selected object:', obj.assetName);
           break;
         }
       }
       renderCanvas();
     };
-
+  
     const handleMouseMove = (e) => {
-      if (!canAccessApp) return;
+      // Remove canAccessApp check here too
       
       const canvasData = canvasRef.current;
       if (!canvasData) return;
-
+  
       const pos = getMousePos(e);
-
+  
       if (canvasData.isResizing && canvasData.selectedObject && canvasData.resizeHandle) {
         const obj = canvasData.selectedObject;
         const handle = canvasData.resizeHandle;
@@ -473,7 +471,7 @@ export default function BeautifulCustomizer() {
             const obj = canvasData.objects[i];
             if (pos.x >= obj.left && pos.x <= obj.left + obj.width &&
                 pos.y >= obj.top && pos.y <= obj.top + obj.height) {
-              newCursor = canAccessApp ? 'grab' : 'not-allowed';
+              newCursor = 'grab';
               break;
             }
           }
@@ -482,30 +480,33 @@ export default function BeautifulCustomizer() {
         canvas.style.cursor = newCursor;
       }
     };
-
+  
     const handleMouseUp = () => {
       const canvasData = canvasRef.current;
       if (!canvasData) return;
-
+  
       canvasData.isDragging = false;
       canvasData.isResizing = false;
       canvasData.resizeHandle = null;
       canvas.style.cursor = 'default';
     };
-
-    canvas.addEventListener('mousedown', handleMouseDown);
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseup', handleMouseUp);
-    canvas.addEventListener('mouseleave', handleMouseUp);
-
+  
+    // Force attach the event listeners
+    canvas.addEventListener('mousedown', handleMouseDown, true);
+    canvas.addEventListener('mousemove', handleMouseMove, true);
+    canvas.addEventListener('mouseup', handleMouseUp, true);
+    canvas.addEventListener('mouseleave', handleMouseUp, true);
+  
+    console.log('Event listeners attached');
+  
     // Store cleanup function
     canvasRef.current.cleanup = () => {
-      canvas.removeEventListener('mousedown', handleMouseDown);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseup', handleMouseUp);
-      canvas.removeEventListener('mouseleave', handleMouseUp);
+      canvas.removeEventListener('mousedown', handleMouseDown, true);
+      canvas.removeEventListener('mousemove', handleMouseMove, true);
+      canvas.removeEventListener('mouseup', handleMouseUp, true);
+      canvas.removeEventListener('mouseleave', handleMouseUp, true);
     };
-  }
+  };
 
   // Debug function - add this temporarily
 const debugCanvas = () => {
