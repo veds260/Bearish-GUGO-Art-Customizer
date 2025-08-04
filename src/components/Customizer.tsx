@@ -497,6 +497,26 @@ export default function BeautifulCustomizer() {
     };
   }
 
+  // Debug function - add this temporarily
+const debugCanvas = () => {
+  console.log('=== CANVAS DEBUG ===');
+  console.log('Canvas element:', canvasElRef.current);
+  console.log('Canvas ref data:', canvasRef.current);
+  console.log('Can access app:', canAccessApp);
+  console.log('Has NFT loaded:', !!nftImageUrl);
+  console.log('Loaded assets:', loadedAssets.length);
+  
+  if (canvasElRef.current) {
+    console.log('Canvas has event listeners:', {
+      onclick: !!canvasElRef.current.onclick,
+      onmousedown: !!canvasElRef.current.onmousedown,
+      onmousemove: !!canvasElRef.current.onmousemove,
+    });
+  }
+};
+
+// Add this to a button for testing
+
   const fetchNftImage = async (tokenId) => {
     if (!tokenId.trim()) {
       alert('Please enter a valid token ID');
@@ -981,6 +1001,22 @@ export default function BeautifulCustomizer() {
                     💾 Download Masterpiece
                   </button>
                 </div>
+
+                <button
+                  onClick={debugCanvas}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    border: '2px solid #FF0000',
+                    borderRadius: '12px',
+                    background: '#FF0000',
+                    color: 'white',
+                    cursor: 'pointer',
+                  }}
+                >
+                🐛 Debug Canvas
+                </button>
 
                 {/* Active Assets Display */}
                 {loadedAssets.length > 0 && (
