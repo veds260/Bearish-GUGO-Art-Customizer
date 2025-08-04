@@ -5,8 +5,21 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const tokenId = searchParams.get('tokenId');
 
+  // Debug logging
+  console.log('=== API DEBUG ===');
+  console.log('Token ID:', tokenId);
+  console.log('Has API Key:', !!process.env.OPENSEA_API_KEY);
+  console.log('API Key length:', process.env.OPENSEA_API_KEY?.length || 0);
+  
   if (!tokenId) {
     return NextResponse.json({ error: "Missing token ID" }, { status: 400 });
+  }
+
+  // If no API key in production, return error message
+  if (!process.env.OPENSEA_API_KEY) {
+    return NextResponse.json({ 
+      error: "OpenSea API key not configured in Netlify environment variables" 
+    }, { status: 500 });
   }
 
   try {
